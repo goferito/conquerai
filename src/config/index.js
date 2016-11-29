@@ -17,6 +17,8 @@ const defaults = {
 
 , cookieSecret: secrets.cookie
 
+, host: 'localhost:3000'
+
 }
 
 

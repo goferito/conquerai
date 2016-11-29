@@ -25,7 +25,7 @@ const mgAuth = config.mailgun
 const mailergun = nodemailer.createTransport(mg(mgAuth))
 
 //TODO make it env dependant
-const host = 'localhost:3000'
+const host = config.host
 
 passwordless.init(new MongoStore(config.mongoURI))
 passwordless.addDelivery(function(token, uid, mail, cb){
