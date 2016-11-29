@@ -8,11 +8,12 @@ block content
       , name='_id'
       , value=ai._id)
 
-      textarea.codeArea(
-             name='code'
-           , rows=25
-           , cols=80
-           , required=true
-           , placeholder='Your code here...') #{ai ? ai.code : ''}
+    textarea.codeArea(
+      name='code'
+    , rows=25
+    , cols=80
+    , required=true
+    , placeholder='Your code here...') #{ai ? ai.code : ''}
+
     br/
     input(type='submit', value='Play!')
