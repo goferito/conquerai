@@ -7,10 +7,12 @@ block content
       input(type='hidden'
       , name='_id'
       , value=ai._id)
-    textarea(name='code'
-           , rows=15
+
+      textarea.codeArea(
+             name='code'
+           , rows=25
            , cols=80
            , required=true
            , placeholder='Your code here...') #{ai ? ai.code : ''}
     br/
-    input(type='submit')
+    input(type='submit', value='Play!')
