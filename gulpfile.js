@@ -162,11 +162,12 @@ gulp.task('default',
           ]);
 
 
-//TODO'compress and uglify the public app and css
-//gulp.task('release',
-          //[
-            //'stylus',
-            //'browerify',
-            //'uglify'
-          //]);
+gulp.task('deploy',
+          [
+            'copy',
+            'stylus',
+            'browserify',
+            'hintServer',
+            'hintPublic',
+          ]);
 
