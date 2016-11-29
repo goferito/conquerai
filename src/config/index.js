@@ -1,9 +1,9 @@
 
-var secrets = require('../../secrets')
-  , util = require('util')
+const secrets = require('../../secrets')
+const util = require('util')
   
 
-var defaults = {
+const defaults = {
 
   // Gmail credentials
   gmail: secrets.gmail
@@ -12,15 +12,16 @@ var defaults = {
 , mailgun: secrets.mailgun
 
   //
-, mongoURI: 'mongodb://localhost/galaxyconquer'
+, mongoURI: 'mongodb://localhost/conquerai'
 
 
 , cookieSecret: secrets.cookie
 
-};
+}
 
 
 
 module.exports = process.env.NODE_ENV === 'production'
                    ? util._extend(require('./production'), defaults)
-                   : defaults;
+                   : defaults
+
