@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  p Welcome #{user}
+  form(action='/submitAI', method='post')
+    - if (ai)
+      input(type='hidden'
+      , name='_id'
+      , value=ai._id)
+    textarea(name='code'
+           , rows=15
+           , cols=80
+           , required=true
+           , placeholder='Your code here...') #{ai ? ai.code : ''}
+    br/
+    input(type='submit')

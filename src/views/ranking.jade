@@ -1,0 +1,29 @@
+extends layout
+
+block content
+
+  h1 Ranking
+  i Comming soon
+
+  h2 History
+  canvas#viewer
+    i Loading...
+
+  - if (!history)
+    i No history
+  - else
+    ul
+    - each order in history
+      li=JSON.stringify(order)
+
+  h2 Log
+  - if (!log)
+    i No log
+  - else
+    ul
+    - each line in log
+      li!=JSON.stringify(line).replace(/\\n/g, '<br>').replace(/\\"/g, '')
+
+  script.
+    window.battleHistory = !{JSON.stringify(history)}
+    window.initialMap = !{JSON.stringify(initialMap)}

@@ -1,0 +1,48 @@
+html
+  head
+    title Login | Galaxy Conquer
+    //-link(href='/css/bootstrap.min.css', rel='stylesheet')
+    //- TODO load from CDN only in production env
+    link(rel="stylesheet",
+       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+    link(href='/css/style.css', rel='stylesheet')
+    style.
+      .form-signin, .msg {
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+      }
+      .form-signin .form-signin-heading {
+        margin-bottom: 10px;
+      }
+      .form-signin .form-control {
+        position: relative;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      .form-signin .form-control:focus {
+        z-index: 2;
+      }
+      .form-signin input[type="text"] {
+        margin-bottom: -1px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 10px 20px;
+      }
+      .form-signin input[type="submit"] {
+        margin-top: -1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+  //- TODO add a captcha, to avoid automated reqs to login
+  //- and therefore drain our mail quota
+
+  body
+    .container
+      block content
+

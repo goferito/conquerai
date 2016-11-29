@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet",
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+    link(rel='stylesheet', href='/css/style.css')
+    block head
+
+  body
+    .navbar.navbar-default(role='navigation')
+      .container
+        .navbar-header
+          a.navbar-brand(href='/') Galaxy Conquerors
+        .navbar-collapse.collapse
+          ul#menu.nav.navbar-nav
+            li#menu_ranking: a(href='/ranking') Ranking
+          ul.nav.navbar-nav.navbar-right
+            li: a(href='/user') #{user}
+            li: a(href='/logout') Logout
+
+    #content.container
+      block content
+
+    script(src='/js/app.js')
+    block scripts

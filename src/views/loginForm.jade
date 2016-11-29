@@ -1,0 +1,13 @@
+extends login
+
+block content
+  form.form-signin(method='post', action='/login')
+    h1 Galaxy Conquer
+    h2.form-signin-heading Please Sign in:
+
+    input.form-control(type='text',
+                       name='user',
+                       placeholder='Enter your email',
+                       required,
+                       autofocus)
+    input.btn.btn-lg.btn-primary.btn-block(type='submit', value='Sign In')
