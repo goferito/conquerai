@@ -34,11 +34,13 @@ passwordless.addDelivery(function(token, uid, mail, cb){
     cb()
   } else {
     mailergun.sendMail({
-      from: "Galaxy Conquer <galaxyconquer@locksha.de>",
+      from: "ConquerAI <galaxyconquer@locksha.de>",
       to: mail,
       subject: "Hi, this is dog",
-      text: `Hello! Access to your account here: <br /> \n ${accessLink}`
-            + `<i>The link will expire in one hour.</i>`
+      text: `Hello! Access to your account here:\n${accessLink}`
+        + `\n\nThe link will expire in one hour.`,
+      html: `Hello! Access to your account here:<br />${accessLink}`
+        + `<br /><i>The link will expire in one hour.</i>`
     }, cb)
   }
 },
