@@ -24,6 +24,6 @@ const defaults = {
 
 
 module.exports = process.env.NODE_ENV === 'production'
-                   ? util._extend(require('./production'), defaults)
+                   ? Object.assign(defaults, require('./production')
                    : defaults
 
