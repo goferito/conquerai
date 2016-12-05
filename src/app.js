@@ -31,15 +31,16 @@ passwordless.addDelivery(function(token, uid, mail, cb){
   // Log access link to avoid waiting for the email
   if (process.env.NODE_ENV !== 'production') {
     console.log('accessLink:', accessLink)
+    cb()
+  } else {
+    mailergun.sendMail({
+      from: "Galaxy Conquer <galaxyconquer@locksha.de>",
+      to: mail,
+      subject: "Hi, this is dog",
+      text: `Hello! Access to your account here: <br /> \n ${accessLink}`
+            + `<i>The link will expire in one hour.</i>`
+    }, cb)
   }
-
-  mailergun.sendMail({
-    from: "Galaxy Conquer <galaxyconquer@locksha.de>",
-    to: mail,
-    subject: "Hi, this is dog",
-    text: `Hello! Access to your account here: <br /> \n ${accessLink}`
-          + `<i>The link will expire in one hour.</i>`
-  }, cb)
 },
 {
   ttl: 1000 * 60 * 60

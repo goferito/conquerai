@@ -55,7 +55,6 @@ class Viewer {
     //TODO check if a player already owns all the planets
     // if true, check that all orders have been used, and declare the winner
 
-    console.log('New turn:', this.turn)
     if (this.turn > this.MAX_TURNS && !this.fleets.length) {
       console.log('Winner calculation pending...')
       //TODO if no winner yet, count the number of planets or the growth
@@ -72,14 +71,12 @@ class Viewer {
 
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-      console.log('Drawing map...')
       this.fleets.forEach((fleet, i) => {
       
         //Get the position of the fleet for this frame
         const usedFrames = this.FPT * (1 + this.turn - fleet.turn) - drawsLeft
         const percentDrawn = usedFrames / fleet.tripFrames
         if (percentDrawn >= 1) {
-          console.log('Got there! Deleting...')
           this.resolveArrival(i)
         } else {
           this.drawFleet(fleet, percentDrawn)
@@ -94,19 +91,28 @@ class Viewer {
     }, this.TPF)
   }
 
+
   resolveArrival (fleetIndex) {
 
     const fleet = this.fleets[fleetIndex]
 
-    if (fleet.dest.ships <= fleet.ships) {
-      fleet.dest.owner = fleet.player
-      fleet.dest.ships = Math.abs(fleet.dest.ships - fleet.ships)
+    // If fleet arrives to owned planet, no battle, and all ships are added
+    if (fleet.player === fleet.dest.owner) {
+      fleet.dest.ships += fleet.ships
     } else {
-      fleet.dest.ships -= fleet.ships
+
+      // Check if enough to conquer
+      if (fleet.dest.ships <= fleet.ships) {
+        fleet.dest.owner = fleet.player
+        fleet.dest.ships = Math.abs(fleet.dest.ships - fleet.ships)
+      } else {
+        fleet.dest.ships -= fleet.ships
+      }
     }
 
     this.fleets.splice(fleetIndex, 1)
   }
+
 
   drawFleet (fleet, percentGone) {
     const ctx = this.context
@@ -129,26 +135,26 @@ class Viewer {
     ctx.fillText(fleet.ships, centerX, centerY)
   }
 
+
   sendNewFleets () {
     for (let order of this.orders) {
       if (order.turn < this.turn) continue
       if (order.turn > this.turn) break
 
       //Get references to the planet in the map
-      const origin = this.map[order.origin]
-      const dest   = this.map[order.dest]
+      const origin = this.map[order.origin - 1]
+      const dest   = this.map[order.dest - 1]
       const tripTurns = order.arrival - order.turn
       const tripFrames = tripTurns * this.FPT
-      console.log('tripFrames:', tripFrames)
       const fleet = Object.assign({}, order, {
         origin,
         dest,
         tripFrames
       })
       this.fleets.push(fleet)
-      console.log(fleet)
     }
   }
+
 
   getDistance (a, b) {
     const distX = a.x - b.x
@@ -156,13 +162,14 @@ class Viewer {
     return Math.sqrt(distX * distX + distY * distY)
   }
 
-  play () {
 
+  play () {
     console.log('canvas.width :' , this.canvas.width)
     console.log('canvas.height:', this.canvas.height)
 
     this.animateTurn()
   }
+
 
   growPlanets () {
     this.map = this.map.map((planet) => {
@@ -170,6 +177,7 @@ class Viewer {
       return planet
     })
   }
+
 
   drawPlanet (planet) {
     const ctx = this.context
@@ -183,7 +191,7 @@ class Viewer {
     ctx.fill()
     ctx.fillStyle = 'black'
     ctx.font = '12px serif'
-    ctx.fillText(planet.ships, centerX, centerY)
+    ctx.fillText(planet.id + '/' + planet.ships, centerX, centerY)
   }
 
 }

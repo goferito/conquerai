@@ -13,5 +13,9 @@ if (!orders || !orders.length) {
     map,
     orders
   })
+
+  //TODO print legend
+  console.log('players:', viewer.players)
+
   viewer.play()
 }
