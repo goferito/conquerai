@@ -2,13 +2,10 @@ extends layout
 
 block content
 
-  h1 Ranking
-  i Comming soon
-
-  h2 History
   canvas#viewer
     i Loading...
 
+  h4 Order history
   - if (!history)
     i No history
   - else
@@ -16,10 +13,10 @@ block content
     - each order in history
       li=JSON.stringify(order)
 
-  h2 Log
-  - if (!log)
+  - if (!log || !log.length)
     i No log
   - else
+    h2 Log
     ul
     - each line in log
       li!=JSON.stringify(line).replace(/\\n/g, '<br>').replace(/\\"/g, '')
