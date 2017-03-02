@@ -55,8 +55,9 @@ Game.prototype.createHistory = function() {
   //   leaving the planet, and the number of ships staying on the
   //   planet
 
-  while (this.turn < this.MAXTURNS) {
+  while (!this.winner && this.turn < this.MAXTURNS) {
     this.updateFleets()
+    this.checkWinner()
     this.growPlanets()
     this.processOrders(this.requestOrders())
     this.turn++
@@ -66,6 +67,37 @@ Game.prototype.createHistory = function() {
     orders: this.history,
     log: this.playersLog
   }
+}
+
+
+/**
+ * Checks if someone has already won the game
+ */
+Game.prototype.checkWinner = function () {
+
+  const playersWithPlanets = this.map.reduce((players, planet) => {
+    if (planet.owner && !players.includes(planet.owner)) {
+      players.push(planet.owner)
+    }
+    return players
+  }, [])
+
+  // If all conquered planets belong to the same user,
+  // and all the moving fleets as well, that player has won
+  if (playersWithPlanets.length === 1) {
+    const fleetOwners = this.fleets.reduce((players, fleet) => {
+      if (!players.includes(fleet.player)) {
+        players.push(fleet.player)
+      }
+      return players
+    }, [])
+
+    if (!fleetOwners.length) this.winner = playersWithPlanets
+    if (fleetOwners.length === 1 && fleetOwners[0] === playersWithPlanets[0]) {
+      this.winner = playersWithPlanets
+    }
+  }
+
 }
 
 

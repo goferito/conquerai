@@ -113,8 +113,7 @@ class Viewer {
       // If same planets, number of ships wins
       if (p1.ships !== p2.ships) return p2.ships - p1.ships
     })[0]
-    alert(winner.split('@')[0] + " wins!")
-
+    alert(winner.split('@')[0] + ' wins!')
   }
 
 
