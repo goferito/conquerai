@@ -142,6 +142,7 @@ app.post('/submitAI'
         , user      : req.user
         , history   : req.history
         , initialMap: req.initialMap
+        , gameConfig: req.gameConfig
         , log       : req.log
       }
 

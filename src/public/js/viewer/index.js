@@ -29,17 +29,9 @@ class Viewer {
     this.canvas.width  = this.canvas.clientWidth
     this.canvas.height = this.canvas.clientWidth
 
-    // List of colours for the players
-    const colors = ['green', 'blue', 'purple', 'red', 'orange']
-
-    // Give colours to players
-    this.players = this.map.reduce((players, planet) => {
-      if (planet.owner && !players[planet.owner]) {
-        players[planet.owner] = {
-          color: colors[Object.keys(players).length]
-        }
-      }
-      return players
+    this.players = config.players.reduce((kPlayers, player) => {
+      kPlayers[player.name] = player
+      return kPlayers
     }, {})
 
     //List of moving fleets
@@ -231,6 +223,7 @@ class Viewer {
         tripFrames
       })
       this.fleets.push(fleet)
+      origin.ships -= order.ships
     }
   }
 
