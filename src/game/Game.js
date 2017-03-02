@@ -132,7 +132,7 @@ Game.prototype.requestOrders = function () {
     scene.playerId = player.name;
 
     try {
-      order = player.ai(scene, this.playersLlog)
+      order = player.ai(scene, this.playersLog)
 
       var orderErrors = getOrderErrors(order, player, this.kPlanets)
       if (!orderErrors) {

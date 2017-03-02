@@ -13,11 +13,12 @@ class Viewer {
     this.context = config.canvas.getContext('2d')
     this.map     = config.map
     this.orders  = config.orders
+    this.legend  = config.legend
 
     // Points Per Turn (fleet speed). This should match the speed used
     // on the server to create the orders. So... do not touch
     this.PPT = config.FPT || 10
-    this.MAX_TURNS = 10
+    this.MAX_TURNS = this.orders[this.orders.length -1].turn
     //TODO get theses values with the history
 
     this.TPT = config.FPT || 3000  // Time Per Turn (in ms)
@@ -48,17 +49,95 @@ class Viewer {
     this.turn = 0
   }
 
+  updatePlayerStats () {
+
+    // Calculate the number of conquered planets, growing ratio, and
+    // total ships of each player
+    //TODO include moving ships (fleets)
+    const stats = this.map.reduce((counts, planet) => {
+
+      if (!planet.owner) {
+        return counts
+      }
+
+      if (!counts[planet.owner]) {
+        counts[planet.owner] = {
+          ratio: 0,
+          planets: 0,
+          ships: 0
+        }
+      }
+      counts[planet.owner].ratio += planet.ratio
+      counts[planet.owner].planets += 1
+      counts[planet.owner].ships += planet.ships
+      return counts
+    }, {})
+
+    // Update the players with the counts
+    Object.keys(this.players).forEach((playerId) => {
+      this.players[playerId].ratio = (stats[playerId] || {}).ratio || 0
+      this.players[playerId].planets = (stats[playerId] || {}).planets || 0
+      this.players[playerId].ships = (stats[playerId] || {}).ships || 0
+    })
+  }
+
+  drawLegend () {
+    this.updatePlayerStats()
+
+    this.legend.innerHTML = '<table>'
+      + '<tr><td>Player</td><td>Ratio</td><td>Planets</td><td>Ships</td></tr>'
+      + Object.keys(this.players).map((id) => {
+        const player = this.players[id]
+        const color = player.color
+        const ratio = player.ratio || '-'
+        const planets = player.planets || '-'
+        const ships = player.ships || '-'
+
+        return `<tr style='color:${color}'>`
+          + `<td>${id}</td>`
+          + `<td>${ratio}</td>`
+          + `<td>${planets}</td>`
+          + `<td>${ships}</td>`
+          + `</tr>`
+        }).join('')
+      + '</table>'
+  }
+
+
+  alertWinner () {
+    this.updatePlayerStats()
+
+    // Sort players by ratio - planets - ships, and pich #1
+    const winner = Object.keys(this.players).sort((a, b) => {
+      const p1 = this.players[a]
+      const p2 = this.players[b]
+
+      // Player with bigger ration wins
+      if (p1.ratio !== p2.ratio) return p2.ratio - p1.ratio
+
+      // If same ration, number of planets wins
+      if (p1.planets !== p2.planets) return p2.planets - p1.planets
+
+      // If same planets, number of ships wins
+      if (p1.ships !== p2.ships) return p2.ships - p1.ships
+    })[0]
+    alert(winner.split('@')[0] + " wins!")
+
+  }
+
 
   animateTurn () {
+
+    this.drawLegend()
 
     this.turn ++
     //TODO check if a player already owns all the planets
     // if true, check that all orders have been used, and declare the winner
 
+    // Check if all turn have been displayed
     if (this.turn > this.MAX_TURNS && !this.fleets.length) {
-      console.log('Winner calculation pending...')
-      //TODO if no winner yet, count the number of planets or the growth
-      return
+      console.log('Game Over')
+      return this.alertWinner()
     }
 
     this.growPlanets()

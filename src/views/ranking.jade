@@ -2,24 +2,32 @@ extends layout
 
 block content
 
-  canvas#viewer
-    i Loading...
+  #viewerContainer
 
-  h4 Order history
-  - if (!history)
-    i No history
-  - else
-    ul
-    - each order in history
-      li=JSON.stringify(order)
+    canvas#viewer
+      i Loading...
 
-  - if (!log || !log.length)
-    i No log
-  - else
-    h2 Log
-    ul
-    - each line in log
-      li!=JSON.stringify(line).replace(/\\n/g, '<br>').replace(/\\"/g, '')
+    #legendContainer
+      h4 Summary
+      #legend Loading..
+
+
+  #historyContainer
+    h4 Order history
+    - if (!history)
+      i No history
+    - else
+      ul
+        - each order in history
+          li=JSON.stringify(order)
+
+    - if (!log || !log.length)
+      i No log
+    - else
+      h2 Log
+      ul
+        - each line in log
+          li!=JSON.stringify(line).replace(/\\n/g, '<br>').replace(/\\"/g, '')
 
   script.
     window.battleHistory = !{JSON.stringify(history)}
