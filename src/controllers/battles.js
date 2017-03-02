@@ -45,7 +45,7 @@ me.createHistory = function (req, res, next) {
 
   const gameConfig = {
     players: conquerors,
-    initShips: 5,
+    initShips: 15,
     turns: 10,
     map
   }
