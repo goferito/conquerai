@@ -25,6 +25,7 @@ const defaults = {
     , 'sadoht@gmail.com'
     , 'ray@urge.io'
     , 'matthew.torres211@gmail.com'
+    , 'fsoutomoure@gmail.com'
   ]
 
 }

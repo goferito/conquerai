@@ -13,3 +13,5 @@
   funcion de como de rapido lo quiere ver el jugador
 
 * Jugar por equipos
+
+* Allow to change destination of fleets
