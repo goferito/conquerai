@@ -39,8 +39,12 @@ passwordless.addDelivery(function(token, uid, mail, cb){
       subject: "Hi, this is dog",
       text: `Hello! Access to your account here:\n${accessLink}`
         + `\n\nThe link will expire in one hour.`,
-      html: `Hello! Access to your account here:<br />${accessLink}`
+      html: `Hello! Access to your account here:`
+        + `<br />`
+        + `<br />${accessLink}`
+        + `<br />`
         + `<br /><i>The link will expire in one hour.</i>`
+        + `<br />`
     }, cb)
   }
 },
