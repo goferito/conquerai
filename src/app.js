@@ -84,10 +84,17 @@ app.get('/login', function(req, res){
 
 
 app.post('/login'
-, passwordless.requestToken(function(user, delivery, cb, req){
+  , (req, res, next) => {
+    if (config.allowedPlayers.includes(req.body.user)) {
+      return next()
+    } else {
+      return res.status(401).render('notAllowed')
+    }
+  }
+  , passwordless.requestToken(function(user, delivery, cb, req){
     cb(null, user);
   })
-, function(req, res){
+  , function(req, res){
     res.render('tokenSent');
   })
 

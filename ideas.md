@@ -2,8 +2,10 @@
 
 * Instead of planets, it can be played on known maps, like real world map,
   game of thrones map, etc.
+
 * From one node you can only go to other nodes, and paths to different nodes
   may have different travelling speeds
+
 * Each node may have defensing ratio. So you need extra atackers to conquer
   a node
 

@@ -6,6 +6,7 @@ var me = module.exports = {};
 
 
 me.loadAIs = function(req, res, next){
+  // TODO if no ai, put a placeholder ai
   AIFunctions.getByEmail(req.user, function(err, ai){
     req.ai = ai;
     next();

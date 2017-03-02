@@ -6,18 +6,26 @@ const util = require('util')
 const defaults = {
 
   // Gmail credentials
-  gmail: secrets.gmail
+    gmail: secrets.gmail
 
   // Mailgun creds
-, mailgun: secrets.mailgun
+  , mailgun: secrets.mailgun
 
   //
-, mongoURI: 'mongodb://localhost/conquerai'
+  , mongoURI: 'mongodb://localhost/conquerai'
 
 
-, cookieSecret: secrets.cookie
+  , cookieSecret: secrets.cookie
 
-, host: 'localhost:3000'
+  , host: 'localhost:3000'
+
+  // List of allowed emails to pass auth
+  , allowedPlayers: [
+      'goferito@gmail.com'
+    , 'sadoht@gmail.com'
+    , 'ray@urge.io'
+    , 'matthew.torres211@gmail.com'
+  ]
 
 }
 
