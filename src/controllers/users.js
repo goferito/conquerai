@@ -110,7 +110,7 @@ const placeholderAI = {
     // ships, which is not already mine
     const weakest = data.map.reduce((chosen, planet) => {
       if (planet.owner === me) return chosen
-      if (planet.ships < chosen.ships) return chosen
+      if (planet.ships > chosen.ships) return chosen
       return planet
     }, {})
 
